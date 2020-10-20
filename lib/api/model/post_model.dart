@@ -9,7 +9,8 @@ class PostModel {
   String title;
   String body;
 
-  PostModel([this.userId, this.id, this.title, this.body]);
+  PostModel([this.userId = 0, this.id = 0, this.title = "", this.body = ""]);
+
   factory PostModel.fromJson(Map<String, dynamic> json) => _$PostModelFromJson(json);
   Map<String, dynamic> toJson() => _$PostModelToJson(this);
 }

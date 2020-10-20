@@ -12,7 +12,7 @@ class HomeDetailViewModel with ChangeNotifier{
   final PostApiService _postApiService;
 
   HomeDetailViewModel(this._route, this._postApiService){
-    _status = HomeDetailStatus(titleBar: 'Listado de Posts', post: null);
+    _status = HomeDetailStatus(titleBar: 'Listado de Posts', post: PostModel());
   }
 
   HomeDetailStatus get status => _status;

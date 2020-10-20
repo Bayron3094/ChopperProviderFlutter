@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => HomeViewModel(_route, _postApiService),
       builder: (context, _) {
-        return HomeWidget(_route);
+        return HomeWidget();
       },
     );
   }
@@ -29,9 +29,6 @@ class HomePage extends StatelessWidget {
 }
 
 class HomeWidget extends StatefulWidget {
-
-  final GfilesRoute route;
-  HomeWidget(this.route);
 
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
@@ -59,7 +56,11 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
-  ListView _buildPosts(HomeViewModel viewModel) {
+  Widget _buildPosts(HomeViewModel viewModel) {
+
+    if(viewModel.status.isLoading){
+      return CircularProgressIndicator();
+    }
     return ListView.builder(
       itemCount: viewModel.status.listPost.length,
       padding: EdgeInsets.all(8),
@@ -67,8 +68,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         return HomeCard(
             title: viewModel.status.listPost[index].title,
             body: viewModel.status.listPost[index].body,
-            //onTap: widget.route.goHomeDetail(viewModel.status.listPost[index].id)
-            onTap: () => _navigateToPost(context, viewModel.status.listPost[index].id)
+            onTap: (){
+              viewModel.onTapCard(index);
+            }
         );
       },
     );

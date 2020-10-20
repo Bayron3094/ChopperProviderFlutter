@@ -13,11 +13,9 @@ class HomeViewModel with ChangeNotifier{
   final PostApiService _postApiService;
 
   HomeViewModel(this._route, this._postApiService){
-    _status = HomeDetailStatus(titleBar: 'Listado de Posts', listPost: []);
+    _status = HomeDetailStatus(titleBar: 'Listado de Posts', listPost: [], isLoading: true);
   }
-
   HomeDetailStatus get status => _status;
-
   set status(HomeDetailStatus value) {
     _status = value;
     notifyListeners();
@@ -29,12 +27,13 @@ class HomeViewModel with ChangeNotifier{
     //final postDecode = ListPost.fromJson(json.decode(response.body.toString()));
     List<PostModel> postDecode = response.body.map(
             (j) => PostModel.fromJson(j)
-        ).toList().cast<PostModel>();
+    ).toList().cast<PostModel>();
+
     print("Decode: ${postDecode}");
-    status = status.copyWith(listPost: postDecode);
+    status = status.copyWith(listPost: postDecode, isLoading: false);
   }
 
   void onTapCard(int index) {
-    //final id = status.listPost[index]['id'];
+    _route.goHomeDetail(status.listPost[index].id);
   }
 }
