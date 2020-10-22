@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:gfiles_app/api/model/post.dart';
 import 'package:gfiles_app/api/model/post_model.dart';
 import 'package:gfiles_app/api/repository/service/api_service.dart';
 import 'package:gfiles_app/configure/gfiles_route.dart';
@@ -15,6 +14,7 @@ class HomeViewModel with ChangeNotifier{
   HomeViewModel(this._route, this._postApiService){
     _status = HomeDetailStatus(titleBar: 'Listado de Posts', listPost: [], isLoading: true);
   }
+
   HomeDetailStatus get status => _status;
   set status(HomeDetailStatus value) {
     _status = value;
