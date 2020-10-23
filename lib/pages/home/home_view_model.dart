@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:gfiles_app/api/model/built_post.dart';
 import 'package:gfiles_app/api/model/post_model.dart';
+import 'package:gfiles_app/api/repository/interactors/api_interactor.dart';
 import 'package:gfiles_app/api/repository/service/api_service.dart';
 import 'package:gfiles_app/configure/gfiles_route.dart';
 import 'package:gfiles_app/pages/home/home_status.dart';
@@ -10,9 +11,9 @@ import 'package:gfiles_app/pages/home/home_status.dart';
 class HomeViewModel with ChangeNotifier{
   HomeDetailStatus _status;
   final GfilesRoute _route;
-  final PostApiService _postApiService;
+  final ApiInteractor _interactor;
 
-  HomeViewModel(this._route, this._postApiService){
+  HomeViewModel(this._route, this._interactor){
     _status = HomeDetailStatus(titleBar: 'Listado de Posts', listPost: [], isLoading: true);
   }
 
@@ -23,16 +24,14 @@ class HomeViewModel with ChangeNotifier{
   }
 
   void onInit() async {
-    final response = await _postApiService.getPosts();
-    print("Response: ${response.body}");
+    final response = await _interactor.getBuiltPost();
+    print("Response: ${response}");
     //final postDecode = ListPost.fromJson(json.decode(response.body.toString()));
-    var postDecode = response.body;
     /*= response.body.map(
             (j) => PostModel.fromJson(j)
     ).toList().cast<PostModel>();*/
 
-    print("Decode: ${postDecode}");
-    status = status.copyWith(listPost: postDecode, isLoading: false);
+    status = status.copyWith(listPost: response, isLoading: false);
   }
 
   void onTapCard(int index) {

@@ -9,11 +9,9 @@ part 'api_service.chopper.dart';
 @ChopperApi(baseUrl: '/posts')
 abstract class PostApiService extends ChopperService {
   @Get()
-  // Update the type parameter of Response to BuiltList<BuiltPost>
   Future<Response<BuiltList<BuiltPost>>> getPosts();
 
   @Get(path: '/{id}')
-  // For single returned objects, response will hold only one BuiltPost
   Future<Response<BuiltPost>> getPost(@Path('id') int id);
 
   @Post()

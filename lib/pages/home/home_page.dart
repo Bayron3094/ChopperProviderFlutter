@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:chopper/chopper.dart';
+import 'package:gfiles_app/api/repository/interactors/api_interactor.dart';
 import 'package:gfiles_app/configure/gfiles_route.dart';
 import 'package:gfiles_app/pages/home/home_view_model.dart';
 import 'package:gfiles_app/pages/home_detail/home_detail_page.dart';
@@ -14,12 +15,12 @@ class HomePage extends StatelessWidget {
 
   final _route = GfilesRoute();
 
-  final _postApiService = PostApiService.create();
+  final _interactor = ApiInteractor();
 
   @override
   Widget build(BuildContext context ) {
     return ChangeNotifierProvider(
-      create: (_) => HomeViewModel(_route, _postApiService),
+      create: (_) => HomeViewModel(_route, _interactor),
       builder: (context, _) {
         return HomeWidget();
       },
